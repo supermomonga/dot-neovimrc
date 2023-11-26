@@ -1,10 +1,14 @@
 
 " hook_add {{{
 nnoremap <C-p> <Cmd>Ddu file_rec<CR>
+nnoremap <C-S-p> <Cmd>Ddu -name=command_palette<CR>
 nnoremap <C-c> <Cmd>Ddu -name=command_palette<CR>
 "nnoremap <Space>h <Cmd>Ddu help<CR>
 nnoremap <C-l> <Cmd>Ddu line<CR>
 "nnoremap gd <Cmd>Ddu -name=lsp:definitions<CR>
+
+" TODO: LSP サーバーがアタッチされた場合のみ有効にする
+" ref: https://zenn.dev/botamotch/articles/21073d78bc68bf#1.-lsp-server-management
 nnoremap <C-]> <Cmd>Ddu -name=lsp:definitions<CR>
 " }}}
 
