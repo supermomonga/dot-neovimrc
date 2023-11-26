@@ -1,0 +1,23 @@
+[[plugins]]
+repo = 'Shougo/dpp-ext-installer'
+hook_add = '''
+command! DppInstall call dpp#async_ext_action('installer', 'install')
+command! DppUpdate call dpp#async_ext_action('installer', 'update')
+'''
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-lazy'
+
+#[[plugins]]
+#repo = 'Shougo/dpp-ext-local'
+
+[[plugins]]
+repo = 'Shougo/dpp-ext-toml'
+
+[[plugins]]
+repo = 'Shougo/dpp-protocol-git'
+
+[[plugins]]
+repo = 'Shougo/dpp.vim'
+depends = 'denops.vim'
+on_source = 'denops.vim'

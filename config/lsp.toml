@@ -1,0 +1,42 @@
+# lazy
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+on_cmd = [
+  'LspLog',
+  'LspInfo',
+  'LspStart',
+  'LspStop',
+  'LspRestart'
+]
+depends = 'ddc-source-nvim-lsp'
+lua_source = '''
+
+-- Override capabilities and forceCompletionPattern
+require('ddc_nvim_lsp_setup').setup()
+local lspconfig = require('lspconfig')
+
+-- Ruby
+lspconfig.rubocop.setup { }
+lspconfig.ruby_ls.setup { }
+lspconfig.steep.setup { }
+-- Deno
+lspconfig.denols.setup { }
+'''
+
+# LSP サーバインストーラ。今のところ要らない
+#[[plugins]]
+#repo = 'williamboman/mason.nvim'
+#depends = 'nvim-lspconfig'
+##on_event = 'BufRead'
+#on_cmd = [
+#  'Mason',
+#  'MasonUpdate',
+#  'MasonInstall',
+#  'MasonUninstall',
+#  'MasonUninstallAll',
+#  'MasonLog',
+#]
+#lua_source = '''
+#  require('mason').setup()
+#'''
