@@ -45,9 +45,12 @@ export class Config extends BaseConfig {
 
     const [context, options] = await args.contextBuilder.get(args.denops);
 
+    const ghqRoot = new TextDecoder().decode(
+      await Deno.run({ cmd: ['ghq', 'root'], stdout: 'piped' }).output()
+    ).trim()
     const tomlPathPattern = `${
-      Deno.env.get("HOME")
-    }/ghq/github.com/supermomonga/dot-nvimrc/**/*.toml`;
+      ghqRoot
+    }/github.com/supermomonga/dot-nvimrc/**/*.toml`;
     const tomls: Toml[] = [];
     for await (const entry of expandGlob(tomlPathPattern)) {
       const isLazy = await isLazyToml(entry.path);

@@ -6,7 +6,8 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-let $VIMDIR = expand('~/ghq/github.com/supermomonga/dot-nvimrc')
+let $VIMDIR = expand(trim(system('ghq root')) .. '\github.com\supermomonga\dot-nvimrc')
+
 source $VIMDIR/config/base.vim
 
 " Set dpp base path (required)
