@@ -36,3 +36,11 @@ nnoremap <expr>^ col('.') == 1 ? '^' : '0'
 nnoremap _ :sp<CR>
 nnoremap <bar> :vsp<CR>
 
+" Font
+if has('gui_running')
+  if has('win32')
+    set guifont=IntoneMono\ NF:h11
+  else
+    set guifont=IntoneMono\ NF\ 11
+  endif
+endif
