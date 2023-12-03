@@ -6,7 +6,10 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-let $VIMDIR = expand(trim(system('ghq root')) .. '\github.com\supermomonga\dot-nvimrc')
+" const s:vital_src = '~/.cache/dpp/repos/github.com/vim-jp/vital.vim'
+" execute 'set runtimepath^=' .. s:vital_src
+" let s:V = vital#of('vital')
+let $VIMDIR = expand(trim(system('ghq root')) .. '/github.com/supermomonga/dot-nvimrc')
 
 source $VIMDIR/config/base.vim
 
