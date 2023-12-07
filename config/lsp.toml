@@ -10,6 +10,53 @@ on_cmd = [
   'LspRestart'
 ]
 depends = 'ddc-source-nvim-lsp'
+lua_add = '''
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {
+    border = "single", -- "shadow" , "none", "rounded"
+    -- border = border
+    -- width = 100,
+  }
+)
+
+function on_attach(on_attach)
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local buffer = args.buf
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      on_attach(client, buffer)
+    end,
+  })
+end
+
+on_attach(function(client, buffer)
+  vim.keymap.set('n', 'gd', '<Cmd>Ddu -name=lsp:definitions<CR>', { silent = true, buffer = buffer })
+  vim.keymap.set('n', '<C-]>', '<Cmd>Ddu -name=lsp:definitions<CR>', { silent = true, buffer = buffer })
+  vim.call('signature_help#enable')
+end)
+
+local timer_id = nil
+
+local function on_cursor_moved()
+  if timer_id then
+    vim.fn.timer_stop(timer_id)
+  end
+  timer_id = vim.fn.timer_start(100, vim.lsp.buf.hover)
+end
+
+on_attach(function(client, buffer)
+  vim.api.nvim_create_autocmd(
+    { "CursorMoved" },
+    {
+      callback = on_cursor_moved,
+      buffer = buffer,
+    }
+  )
+end)
+
+
+'''
 lua_source = '''
 
 -- Override capabilities and forceCompletionPattern
@@ -23,6 +70,26 @@ lspconfig.ruby_ls.setup { }
 lspconfig.steep.setup { }
 -- Deno
 lspconfig.denols.setup { }
+-- Astro
+lspconfig.astro.setup {
+  cmd = { "pnpm", "exec", "astro-ls", "--stdio" }
+}
+lspconfig.mdx_analyzer.setup {
+  cmd = { "pnpm", "exec", "mdx-language-server", "--stdio" }
+}
+-- TypeScript
+lspconfig.tsserver.setup {
+  cmd = { "pnpm", "exec", "typescript-language-server", "--stdio" }
+}
+'''
+
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+hook_add = '''
+let g:signature_help_config = #{
+      \ contentsStyle: "full",
+      \ viewStyle: "floating"
+      \ }
 '''
 
 # LSP サーバインストーラ。今のところ要らない
