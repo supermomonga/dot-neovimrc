@@ -20,7 +20,6 @@ hook_source = '''
     \   preview_border: 'rounded',
     \   preview_width: 80,
     \   reversed: v:false,
-    \   use_complete: v:true,
     \   use_setline: v:false,
     \ })
 
