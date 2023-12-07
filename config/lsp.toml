@@ -9,7 +9,7 @@ on_cmd = [
   'LspStop',
   'LspRestart'
 ]
-depends = 'ddc-source-nvim-lsp'
+depends = ['ddc-source-lsp', 'ddc-source-lsp-setup']
 lua_add = '''
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -60,7 +60,7 @@ end)
 lua_source = '''
 
 -- Override capabilities and forceCompletionPattern
-require('ddc_nvim_lsp_setup').setup()
+require('ddc_source_lsp_setup').setup()
 local lspconfig = require('lspconfig')
 lspconfig.autostart = true
 

@@ -41,7 +41,7 @@ repo = 'uga-rosa/ddu-source-lsp'
 on_source = 'ddu.vim'
 hook_add = '''
 " let g:ddu_source_lsp_clientName = 'lspoints'
-let g:ddu_source_lsp_clientName = 'nvim-lsp'
+let g:ddu_source_lsp_clientName = 'lsp'
 '''
 
 [[plugins]]
