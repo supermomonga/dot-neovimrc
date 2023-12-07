@@ -70,7 +70,7 @@ export class Config extends BaseConfig {
         line: {
           mark: "line",
         },
-        "nvim-lsp": {
+        lsp: {
           mark: "lsp",
           forceCompletionPattern: "\\.\\w*|::\\w*|->\\w*",
           sorters: ['sorter_lsp-kind'],
@@ -109,7 +109,7 @@ export class Config extends BaseConfig {
         file: {
           filenameChars: "[:keyword:].",
         },
-        "nvim-lsp": {
+        lsp: {
           // TODO: snippet
           enableResolveItem: true,
           enableAdditionalTextEdit: true
@@ -157,13 +157,13 @@ export class Config extends BaseConfig {
       ]
     ) {
       args.contextBuilder.patchFiletype(filetype, {
-        sources: ["nvim-lsp"].concat(commonSources),
+        sources: ["lsp"].concat(commonSources),
       });
     }
 
     args.contextBuilder.patchFiletype("lua", {
       sources: [
-        "nvim-lsp",
+        "lsp",
       ].concat(commonSources),
     });
 
