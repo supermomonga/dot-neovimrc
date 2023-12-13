@@ -44,3 +44,7 @@ if has('gui_running')
     set guifont=IntoneMono\ NF\ 11
   endif
 endif
+
+" Terminal
+tnoremap <Esc> <C-\><C-n>
+autocmd TermOpen * startinsert

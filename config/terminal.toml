@@ -1,0 +1,19 @@
+
+[[plugins]]
+repo = 'uga-rosa/ugaterm.nvim'
+on_command = [
+  'UgatermOpen',
+  'UgatermHide',
+  'UgatermSend',
+  'UgatermRename',
+]
+lua_source = '''
+require('ugaterm').setup({
+  prefix = 'terminal://',
+  filetype = 'terminal',
+  open_cmd = 'botright 15sp',
+})
+'''
+hook_add = '''
+nnoremap <Space>t <Cmd>UgatermOpen -toggle<CR>
+'''

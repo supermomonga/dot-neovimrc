@@ -42,19 +42,18 @@ repo = 'thinca/vim-quickrun'
 repo = 'osyo-manga/vim-automatic'
 hook_add = '''
 let g:automatic_config = []
-"let g:automatic_config = [
-"      \ #{
-"      \   match: #{
-"      \     filetype: 'help',
-"      \     buftype: 'help',
-"      \   },
-"      \   set: #{
-"      \     move: 'bottom',
-"      \     height: '80%',
-"      \     is_close_focus_out: 1,
-"      \   }
-"      \ }
-"\ ]
+let g:automatic_config = [
+      \ #{
+      \   match: #{
+      \     buftype: 'terminal',
+      \   },
+      \   set: #{
+      \     move: 'bottom',
+      \     height: '40%',
+      \     is_close_focus_out: 1,
+      \   }
+      \ }
+\ ]
 '''
 
 [[plugins]]
