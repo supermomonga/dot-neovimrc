@@ -1,6 +1,18 @@
 # nolazy
 
 [[plugins]]
+repo = 'folke/tokyonight.nvim'
+lua_add = '''
+vim.o.background = 'dark'
+require('tokyonight').setup({
+  style = 'night',
+  --transparent = false,
+  --terminal_colors = true,
+})
+vim.cmd('colorscheme tokyonight')
+'''
+
+[[plugins]]
 repo = 'Mofiqul/vscode.nvim'
 lua_add = '''
 vim.o.background = 'dark'
@@ -27,5 +39,5 @@ require('vscode').setup({
       },
     }
 })
-require('vscode').load()
+-- require('vscode').load()
 '''

@@ -35,4 +35,3 @@ let g:fern#renderer = "nerdfont"
 repo = 'lambdalisue/fern-bookmark.vim'
 depends = 'fern.vim'
 on_source = 'fern.vim'
-

@@ -9,6 +9,7 @@ on_cmd = [
   'LspStop',
   'LspRestart'
 ]
+on_event = 'VimEnter'
 depends = ['ddc-source-lsp', 'ddc-source-lsp-setup']
 lua_add = '''
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -19,6 +20,11 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     -- width = 100,
   }
 )
+
+-- virtual text での診断表示をオフ
+vim.diagnostic.config({
+  virtual_text = false
+})
 
 function on_attach(on_attach)
   vim.api.nvim_create_autocmd("LspAttach", {
@@ -33,23 +39,37 @@ end
 on_attach(function(client, buffer)
   vim.keymap.set('n', 'gd', '<Cmd>Ddu -name=lsp:definitions<CR>', { silent = true, buffer = buffer })
   vim.keymap.set('n', '<C-]>', '<Cmd>Ddu -name=lsp:definitions<CR>', { silent = true, buffer = buffer })
+  -- TODO: C-. マッピングが効かない(´・ω・`)
+  vim.keymap.set('n', '<C-.>', '<Cmd>Lspsaga code_action<CR>', { silent = true, buffer = buffer })
+  vim.keymap.set('n', '<Space>.', '<Cmd>Lspsaga code_action<CR>', { silent = true, buffer = buffer })
   vim.call('signature_help#enable')
 end)
 
-local timer_id = nil
 
-local function on_cursor_moved()
-  if timer_id then
-    vim.fn.timer_stop(timer_id)
+local function has_diagnostic_at_cursor()
+  local diagnostic = require('lspsaga.diagnostic').get_cursor_diagnostic()
+  return #diagnostic > 0
+end
+
+local hover_timer_id = nil
+local function hover_on_cursor_moved()
+  if hover_timer_id then
+    vim.fn.timer_stop(hover_timer_id)
   end
-  timer_id = vim.fn.timer_start(100, vim.lsp.buf.hover)
+  if false then
+  -- if has_diagnostic_at_cursor() then
+    --TODO: カーソル移動させずにrender_diagnostic_windowする
+    --hover_timer_id = vim.fn.timer_start(500, (function() vim.cmd('Lspsaga show_line_diagnostics') end))
+  else
+    hover_timer_id = vim.fn.timer_start(500, (function() vim.cmd('Lspsaga hover_doc') end))
+  end
 end
 
 on_attach(function(client, buffer)
   vim.api.nvim_create_autocmd(
     { "CursorMoved" },
     {
-      callback = on_cursor_moved,
+      callback = hover_on_cursor_moved,
       buffer = buffer,
     }
   )
@@ -62,12 +82,16 @@ lua_source = '''
 -- Override capabilities and forceCompletionPattern
 require('ddc_source_lsp_setup').setup()
 local lspconfig = require('lspconfig')
-lspconfig.autostart = true
+local util = require('lspconfig.util')
 
 -- Ruby
-lspconfig.rubocop.setup { }
-lspconfig.ruby_ls.setup { }
-lspconfig.steep.setup { }
+--lspconfig.rubocop.setup { }
+lspconfig.ruby_ls.setup {
+  formatter = 'rubocop'
+}
+lspconfig.steep.setup {
+  root_dir = util.root_pattern('Steepfile')
+}
 -- Deno
 lspconfig.denols.setup { }
 -- Astro
@@ -92,19 +116,75 @@ let g:signature_help_config = #{
       \ }
 '''
 
-# LSP サーバインストーラ。今のところ要らない
-#[[plugins]]
-#repo = 'williamboman/mason.nvim'
-#depends = 'nvim-lspconfig'
-##on_event = 'BufRead'
-#on_cmd = [
-#  'Mason',
-#  'MasonUpdate',
-#  'MasonInstall',
-#  'MasonUninstall',
-#  'MasonUninstallAll',
-#  'MasonLog',
-#]
-#lua_source = '''
-#  require('mason').setup()
-#'''
+[[plugins]]
+repo = 'elentok/format-on-save.nvim'
+on_source = 'nvim-lspconfig'
+lua_source = '''
+local format_on_save = require("format-on-save")
+local formatters = require("format-on-save.formatters")
+
+format_on_save.setup({
+  experiments = {
+    partial_update = 'diff',
+  },
+  exclude_path_patterns = {
+    "/.git/",
+    "/node_modules/",
+    "/bin/",
+  },
+  formatter_by_ft = {
+    json = formatters.lsp,
+    ruby = formatters.lsp,
+  },
+
+  -- Optional: fallback formatter to use when no formatters match the current filetype
+  fallback_formatter = {
+    formatters.remove_trailing_whitespace,
+    formatters.remove_trailing_newlines,
+    --formatters.prettierd,
+  },
+
+  -- By default, all shell commands are prefixed with "sh -c" (see PR #3)
+  -- To prevent that set `run_with_sh` to `false`.
+  run_with_sh = false,
+})
+'''
+
+
+# LSPサーバーのステータスをいい感じに表示する
+[[plugins]]
+repo = 'j-hui/fidget.nvim'
+on_event = 'VimEnter'
+lua_source = '''
+require('fidget').setup()
+'''
+
+# Diagnostic情報をいい感じに表示したりする
+[[plugins]]
+repo = 'nvimdev/lspsaga.nvim'
+#on_event = 'VimEnter'
+on_source = 'nvim-lspconfig'
+on_cmd = 'Lspsaga'
+lua_source = '''
+require('lspsaga').setup({
+  diagnostic = {
+    keys = {
+      quit = { 'q', '<ESC>' }
+    }
+  },
+  ui = {
+    border = 'single',
+    title = true,
+    code_action = ' '
+  },
+  symbol_in_winbar = { enable = false },
+  lightbulb = { enable = true },
+})
+'''
+
+[[plugins]]
+repo = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+on_event = 'VimEnter'
+lua_source = '''
+require('lsp_lines').setup()
+'''

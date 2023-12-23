@@ -12,6 +12,7 @@ set noswapfile
 set noundofile
 set number
 set showtabline=2
+set termguicolors
 set clipboard=unnamedplus
 
 set list
@@ -48,3 +49,15 @@ endif
 " Terminal
 tnoremap <Esc> <C-\><C-n>
 autocmd TermOpen * startinsert
+
+
+let signs = #{
+      \ Error: " ",
+      \ Warn: " ",
+      \ Hint: " ",
+      \ Info: " "
+\ }
+for [type, icon] in items(signs)
+  let hl = 'DiagnosticSign' . type
+  call sign_define(hl, {'text': icon, 'texthl': hl, 'numhl': hl})
+endfor

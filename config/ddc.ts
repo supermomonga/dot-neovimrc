@@ -122,8 +122,8 @@ export class Config extends BaseConfig {
       const filetype of [
         "help",
         "vimdoc",
-        "markdown",
-        "markdown_inline",
+        //"markdown",
+        //"markdown_inline",
         "gitcommit",
         "comment",
       ]
