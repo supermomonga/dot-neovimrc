@@ -31,6 +31,9 @@ export class Config extends BaseConfig {
           "node_modules",
           // Python
           ".venv",
+          // C#
+          "bin",
+          "obj",
         ],
       },
       file_rec: {
@@ -41,6 +44,9 @@ export class Config extends BaseConfig {
           "node_modules",
           // Python
           ".venv",
+          // C#
+          "bin",
+          "obj",
         ],
       },
     };

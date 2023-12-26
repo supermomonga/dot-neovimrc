@@ -9,7 +9,7 @@ nnoremap <C-l> <Cmd>Ddu line<CR>
 
 " TODO: LSP サーバーがアタッチされた場合のみ有効にする
 " ref: https://zenn.dev/botamotch/articles/21073d78bc68bf#1.-lsp-server-management
-nnoremap <C-]> <Cmd>Ddu -name=lsp:definitions<CR>
+"nnoremap <C-]> <Cmd>Ddu -name=lsp:definitions<CR>
 " }}}
 
 " hook_source {{{
