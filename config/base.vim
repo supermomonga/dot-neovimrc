@@ -50,7 +50,7 @@ endif
 tnoremap <Esc> <C-\><C-n>
 autocmd TermOpen * startinsert
 
-
+set signcolumn=yes
 let signs = #{
       \ Error: " ",
       \ Warn: " ",
