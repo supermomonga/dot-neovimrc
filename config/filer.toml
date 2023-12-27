@@ -3,7 +3,6 @@
 repo = 'lambdalisue/fern.vim'
 on_cmd = 'Fern'
 hook_add = '''
-nnoremap <Space>s :Fern . -drawer -toggle -reveal=% -width=30<CR>
 augroup MyFern
   autocmd FileType fern setlocal nonumber
 augroup END

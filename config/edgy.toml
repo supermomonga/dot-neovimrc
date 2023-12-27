@@ -1,0 +1,87 @@
+[[plugins]]
+repo = 'folke/edgy.nvim'
+on_event = 'VimEnter'
+lua_source = '''
+local bottom = {
+  {
+    ft = 'terminal',
+    size = { height = 0.4 },
+    filter = function(buf, win)
+      return vim.api.nvim_win_get_config(win).relative == ''
+    end,
+    open = 'UgatermOpen',
+    pinned = true,
+  },
+  {
+    ft = 'spectre_panel',
+    size = { height = 0.4 },
+  },
+}
+local left = {
+  {
+    ft = 'fern',
+    size = { height = 0.5 },
+    title = 'Files',
+    open = 'Fern . -drawer -keep -reveal=%',
+    pinned = true,
+  },
+}
+local right = {}
+local top = {}
+require('edgy').setup({
+  top = top,
+  bottom = bottom,
+  left = left,
+  right = right,
+
+  options = {
+    left = { size = 30 }
+  },
+
+  exit_when_last = false,
+  close_when_all_hidden = false,
+})
+'''
+lua_add = '''
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+-- Default splitting will cause your main splits to jump when opening an edgebar.
+-- To prevent this, set `splitkeep` to either `screen` or `topline`.
+vim.opt.splitkeep = "screen"
+
+vim.api.nvim_create_user_command(
+  'ToggleSidebar',
+  function(opts)
+    require('edgy').toggle('left')
+  end,
+  {}
+)
+vim.api.nvim_create_user_command(
+  'ToggleSecondarySidebar',
+  function(opts)
+    require('edgy').toggle('right')
+  end,
+  {}
+)
+vim.api.nvim_create_user_command(
+  'ToggleBottomPane',
+  function(opts)
+    require('edgy').toggle('bottom')
+  end,
+  {}
+)
+vim.api.nvim_create_user_command(
+  'GoToEditorPane',
+  function(opts)
+    require('edgy').goto_main()
+  end,
+  {}
+)
+
+'''
+hook_add = '''
+nnoremap <Space>s :ToggleSidebar<CR>
+nnoremap <Space>r :ToggleSecondarySidebar<CR>
+nnoremap <Space>b :ToggleBottomPane<CR>
+nnoremap <Space>m :GoToEditorPane<CR>
+'''
