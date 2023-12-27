@@ -1,9 +1,6 @@
 # nolazy
 
 [[plugins]]
-repo = 'kana/vim-submode'
-
-[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 hook_add = '''
 let g:context_filetype#filetypes = context_filetype#default_filetypes()
