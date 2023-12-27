@@ -146,7 +146,7 @@ export class Config extends BaseConfig {
         previewHeight: '&lines / 8 * 6',
         previewWidth: '&columns / 8 * 3',
         previewRow: '&lines / 8',
-        previewCol: '&columns / 2 + 1',
+        previewCol: '&columns / 2 + 2',
       }
     }
 
