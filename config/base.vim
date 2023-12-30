@@ -3,6 +3,7 @@ augroup vimrc
   autocmd!
 augroup END
 
+set cmdheight=0
 set expandtab
 set tabstop=2
 set shiftwidth=2
@@ -48,7 +49,7 @@ endif
 
 " Terminal
 tnoremap <Esc> <C-\><C-n>
-autocmd TermOpen * startinsert
+"autocmd TermOpen * startinsert
 
 set signcolumn=yes
 let signs = #{

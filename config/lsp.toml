@@ -61,7 +61,7 @@ local function hover_on_cursor_moved()
     --TODO: カーソル移動させずにrender_diagnostic_windowする
     --hover_timer_id = vim.fn.timer_start(500, (function() vim.cmd('Lspsaga show_line_diagnostics') end))
   else
-    hover_timer_id = vim.fn.timer_start(500, (function() vim.cmd('Lspsaga hover_doc') end))
+    hover_timer_id = vim.fn.timer_start(500, (function() vim.cmd('Lspsaga hover_doc ++silent') end))
   end
 end
 

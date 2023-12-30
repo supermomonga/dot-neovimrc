@@ -207,6 +207,60 @@ export class Config extends BaseConfig {
         }
       }
     })
+    args.contextBuilder.patchLocal('edgy:lsp:documentSymbol', {
+      sources: [
+        {
+          name: 'lsp_documentSymbol',
+          options: {
+            converters: ['converter_lsp_symbol']
+          }
+        }
+      ],
+      sync: false,
+      uiParams: {
+        ff: {
+          displayTree: true,
+          focus: false,
+          startFilter: false,
+          split: 'vertical',
+          autoAction: {},
+          startAutoAction: false,
+          ignoreEmpty: true,
+        }
+      },
+      uiOptions: {
+        ff: {
+          persist: true,
+        }
+      },
+    })
+    args.contextBuilder.patchLocal('edgy:lsp:diagnostics', {
+      sources: [
+        {
+          name: 'lsp_diagnostic',
+          options: {
+            converters: ['converter_lsp_diagnostic']
+          }
+        }
+      ],
+      sync: false,
+      uiParams: {
+        ff: {
+          displayTree: true,
+          focus: false,
+          startFilter: false,
+          split: 'vertical',
+          autoAction: {},
+          startAutoAction: false,
+          ignoreEmpty: true,
+        }
+      },
+      uiOptions: {
+        ff: {
+          persist: true,
+        }
+      },
+    })
 
     // Commands
     args.contextBuilder.patchLocal('command_palette', {

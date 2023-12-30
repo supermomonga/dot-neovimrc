@@ -11,6 +11,7 @@ bufferline.setup({
         bufferline.style_preset.no_italic,
         bufferline.style_preset.no_bold
     },
+    show_buffer_close_icons = false,
     show_close_icon = false,
   },
 })

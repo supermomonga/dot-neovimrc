@@ -10,10 +10,10 @@ on_command = [
 lua_source = '''
 require('ugaterm').setup({
   prefix = 'terminal://',
-  filetype = 'terminal',
+  filetype = "ugaterm",
   open_cmd = 'botright 15sp',
 })
 '''
 hook_add = '''
-nnoremap <Space>t <Cmd>UgatermOpen -toggle<CR>
+"nnoremap <Space>t <Cmd>UgatermOpen -toggle<CR>
 '''

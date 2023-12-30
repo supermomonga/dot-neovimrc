@@ -2,6 +2,7 @@
 " hook_add {{{
 nnoremap <C-p> <Cmd>Ddu file_rec<CR>
 nnoremap <C-S-p> <Cmd>Ddu -name=command_palette<CR>
+nnoremap <Space>p <Cmd>Ddu -name=command_palette<CR>
 nnoremap <C-c> <Cmd>Ddu -name=command_palette<CR>
 "nnoremap <Space>h <Cmd>Ddu help<CR>
 nnoremap <C-l> <Cmd>Ddu line<CR>
