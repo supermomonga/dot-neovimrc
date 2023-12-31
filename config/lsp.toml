@@ -10,7 +10,7 @@ on_cmd = [
   'LspRestart'
 ]
 on_event = 'VimEnter'
-depends = ['ddc-source-lsp', 'ddc-source-lsp-setup']
+depends = ['ddc-source-lsp', 'ddc-source-lsp-setup', 'omnisharp-extended-lsp.nvim']
 lua_add = '''
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -74,8 +74,6 @@ on_attach(function(client, buffer)
     }
   )
 end)
-
-
 '''
 lua_source = '''
 
@@ -106,8 +104,12 @@ lspconfig.tsserver.setup {
   cmd = { "pnpm", "exec", "typescript-language-server", "--stdio" }
 }
 -- C#
+-- Need to setup .omnisharp.json https://github.com/Hoffs/omnisharp-extended-lsp.nvim#omnisharp-settings
 lspconfig.omnisharp.setup {
-  cmd = { "dotnet", "/home/code/.omnisharp/bin/OmniSharp.dll" },
+  cmd = { "dotnet", "/home/code/.omnisharp/bin/OmniSharp.dll", '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+  handlers = {
+    ["textDocument/definition"] = require('omnisharp_extended').handler,
+  },
   enable_editorconfig_support = true,
 
   -- If true, MSBuild project system will only load projects for files that
@@ -142,6 +144,9 @@ lspconfig.omnisharp.setup {
   analyze_open_documents_only = false,
 }
 '''
+
+[[plugins]]
+repo = 'Hoffs/omnisharp-extended-lsp.nvim'
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'
