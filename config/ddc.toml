@@ -165,3 +165,4 @@ on_source = 'ddc.vim'
 repo = 'Shougo/neco-vim'
 on_ft = ['vim', 'toml', 'markdown']
 depends = 'ddc.vim'
+on_source = 'ddc.vim'

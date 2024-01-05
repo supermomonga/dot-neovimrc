@@ -6,6 +6,7 @@ export class Config extends BaseConfig {
 
     const commonSources = [
       "file",
+      "lsp",
     ];
 
     args.contextBuilder.patchGlobal({
@@ -143,6 +144,7 @@ export class Config extends BaseConfig {
       specialBufferCompletion: true,
     });
 
+    // TODO: 効いてない気がする
     for (
       const filetype of [
         "css",
@@ -154,18 +156,14 @@ export class Config extends BaseConfig {
         "typescriptreact",
         "tsx",
         "graphql",
+        "cs",
+        "lua"
       ]
     ) {
       args.contextBuilder.patchFiletype(filetype, {
         sources: ["lsp"].concat(commonSources),
       });
     }
-
-    args.contextBuilder.patchFiletype("lua", {
-      sources: [
-        "lsp",
-      ].concat(commonSources),
-    });
 
     args.contextBuilder.patchFiletype("vim", {
       // Enable specialBufferCompletion for cmdwin.

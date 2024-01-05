@@ -13,13 +13,13 @@ depends = 'context_filetype.vim'
 [[plugins]]
 repo = 'mattn/vim-findroot'
 hook_add = '''
+let g:findroot_not_for_subdir = 1
 let g:findroot_patterns = [
   \  '.git/',
   \  '.gitignore',
   \  'pyproject.toml',
   \  'package.json',
   \  'manifest.json',
-  \  '*.csproj',
   \  '*.sln',
   \  'Rakefile',
   \  'Gemfile',
@@ -27,6 +27,7 @@ let g:findroot_patterns = [
   \  '.tool-versions',
   \  'init.vim',
   \]
+"  \  '*.csproj',
 '''
 
 [[plugins]]

@@ -16,3 +16,16 @@ bufferline.setup({
   },
 })
 '''
+lua_add = '''
+vim.api.nvim_create_user_command(
+  'BufferLineCloseCurrent',
+  function(opts)
+    -- TODO: create new empty buffer if only have one managed buffer
+    vim.api.nvim_command('bd')
+    vim.api.nvim_command('BufferLineGoToBuffer 1')
+  end,
+  {}
+)
+-- vim.keymap.set('n', '<C-x><C-c>', '<Cmd>BufferLineCloseCurrent<CR>')
+vim.keymap.set('n', '<Space>q', '<Cmd>BufferLineCloseCurrent<CR>')
+'''

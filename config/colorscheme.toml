@@ -1,6 +1,13 @@
 # nolazy
 
 [[plugins]]
+repo = 'projekt0n/github-nvim-theme'
+lua_add = '''
+vim.o.background = 'dark'
+vim.cmd('colorscheme github_dark_dimmed')
+'''
+
+[[plugins]]
 repo = 'folke/tokyonight.nvim'
 lua_add = '''
 vim.o.background = 'dark'
@@ -16,7 +23,7 @@ require('tokyonight').setup({
   },
   sidebars = { 'fern', 'terminal' },
 })
-vim.cmd('colorscheme tokyonight')
+--vim.cmd('colorscheme tokyonight')
 '''
 
 [[plugins]]

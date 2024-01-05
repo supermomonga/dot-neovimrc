@@ -31,6 +31,8 @@ export class Config extends BaseConfig {
           "node_modules",
           // Python
           ".venv",
+          // Ruby
+          ".ruby-lsp",
           // C#
           "bin",
           "obj",
@@ -44,6 +46,8 @@ export class Config extends BaseConfig {
           "node_modules",
           // Python
           ".venv",
+          // Ruby
+          ".ruby-lsp",
           // C#
           "bin",
           "obj",
@@ -84,6 +88,7 @@ export class Config extends BaseConfig {
     const kindOptions: Record<string, Partial<KindOptions>> = {
       file: { defaultAction: "open" },
       file_rec: { defaultAction: "open" },
+      action: { defaultAction: "do" },
       command: { defaultAction: "edit" },
       command_history: { defaultAction: "edit" },
       help: { defaultAction: "open" },
@@ -260,6 +265,58 @@ export class Config extends BaseConfig {
           persist: true,
         }
       },
+    })
+    args.contextBuilder.patchLocal('edgy:buffers', {
+      sources: [
+        {
+          name: 'buffer',
+        }
+      ],
+      sync: false,
+      uiParams: {
+        ff: {
+          displayTree: false,
+          focus: false,
+          startFilter: false,
+          split: 'vertical',
+          autoAction: {},
+          startAutoAction: false,
+          ignoreEmpty: true,
+        }
+      },
+      uiOptions: {
+        ff: {
+          persist: true,
+        }
+      },
+    })
+
+    // grep
+    args.contextBuilder.patchLocal('grep', {
+      sources: [
+        {
+          name: 'rg',
+          options: {
+            matchers: [],
+            volatile: true,
+          }
+        },
+      ],
+      sourceParams: {
+        rg: {
+          args: ['--json', '--column', '--no-heading', '--color', 'never'],
+        }
+      },
+      sync: true,
+      uiParams: {
+        ...uiParams,
+        ff: {
+          ...uiParams.ff,
+          ignoreEmpty: false,
+          autoResize: false,
+          floatingTitle: 'Grep',
+        }
+      }
     })
 
     // Commands

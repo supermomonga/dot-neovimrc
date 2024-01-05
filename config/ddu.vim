@@ -1,17 +1,10 @@
-
 " hook_add {{{
-nnoremap <C-p> <Cmd>Ddu file_rec<CR>
-nnoremap <C-S-p> <Cmd>Ddu -name=command_palette<CR>
+nnoremap <Space>f <Cmd>Ddu file_rec<CR>
 nnoremap <Space>p <Cmd>Ddu -name=command_palette<CR>
-nnoremap <C-c> <Cmd>Ddu -name=command_palette<CR>
-"nnoremap <Space>h <Cmd>Ddu help<CR>
-nnoremap <C-l> <Cmd>Ddu line<CR>
-"nnoremap gd <Cmd>Ddu -name=lsp:definitions<CR>
-
-" TODO: LSP サーバーがアタッチされた場合のみ有効にする
-" ref: https://zenn.dev/botamotch/articles/21073d78bc68bf#1.-lsp-server-management
-"nnoremap <C-]> <Cmd>Ddu -name=lsp:definitions<CR>
-" }}}
+nnoremap <Space>g <Cmd>Ddu -name=grep<CR>
+nnoremap <Space>h <Cmd>Ddu help<CR>
+nnoremap <Space>l <Cmd>Ddu line<CR>
+nnoremap <Space>b <Cmd>Ddu buffer<CR>
 
 " hook_source {{{
 call ddu#custom#load_config(expand('$VIMDIR/config/ddu.ts'))
@@ -20,6 +13,8 @@ call ddu#custom#load_config(expand('$VIMDIR/config/ddu.ts'))
 " ddu-ff {{{
 nnoremap <buffer><silent> <CR>
   \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+nnoremap <buffer><silent> a
+  \ <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
 nnoremap <buffer><silent> i
   \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
 nnoremap <buffer><silent> p
@@ -28,10 +23,10 @@ nnoremap <buffer><silent> P
   \ <Cmd>call ddu#ui#ff#do_action('togglePreview')<CR>
 nnoremap <buffer><silent> <Esc>
   \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-nnoremap <buffer><silent> q
-  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 nnoremap <buffer><silent> <Space>
   \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+nnoremap <buffer><silent> S
+  \ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
 
 setlocal cursorline
 " }}}

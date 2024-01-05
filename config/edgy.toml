@@ -1,3 +1,4 @@
+
 [[plugins]]
 repo = 'folke/edgy.nvim'
 on_event = 'VimEnter'
@@ -24,13 +25,33 @@ local bottom = {
 --  },
 }
 local left = {
+--  {
+--    ft = 'ddu-ff',
+--    size = { height = 0.1 },
+--    title = 'Buffers',
+--    open = 'Ddu -name=edgy:buffers',
+--    filter = function(buf)
+--      return vim.b[buf].ddu_ui_name == 'edgy:buffers'
+--    end,
+--    pinned = true,
+--  },
   {
     ft = 'fern',
-    size = { height = 0.5 },
+    size = { height = 0.4 },
     title = 'Files',
     open = 'Fern . -drawer -keep -reveal=%',
     pinned = true,
   },
+--  {
+--    ft = 'ddu-ff',
+--    size = { height = 0.6 },
+--    title = 'Symbols',
+--    open = 'Ddu -name=edgy:lsp:documentSymbol',
+--    filter = function(buf)
+--      return vim.b[buf].ddu_ui_name == 'edgy:lsp:documentSymbol'
+--    end,
+--    pinned = true,
+--  },
 }
 local right = {
   {

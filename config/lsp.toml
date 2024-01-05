@@ -81,32 +81,46 @@ lua_source = '''
 require('ddc_source_lsp_setup').setup()
 local lspconfig = require('lspconfig')
 local util = require('lspconfig.util')
+local ddc_capabilities = require("ddc_source_lsp").make_client_capabilities()
 
 -- Ruby
 --lspconfig.rubocop.setup { }
 lspconfig.ruby_ls.setup {
+  capabilities = ddc_capabilities,
   formatter = 'rubocop'
 }
 lspconfig.steep.setup {
+  capabilities = ddc_capabilities,
   root_dir = util.root_pattern('Steepfile')
 }
 -- Deno
-lspconfig.denols.setup { }
+lspconfig.denols.setup {
+  capabilities = ddc_capabilities,
+}
 -- Astro
 lspconfig.astro.setup {
+  capabilities = ddc_capabilities,
   cmd = { "pnpm", "exec", "astro-ls", "--stdio" }
 }
 lspconfig.mdx_analyzer.setup {
+  capabilities = ddc_capabilities,
   cmd = { "pnpm", "exec", "mdx-language-server", "--stdio" }
 }
 -- TypeScript
 lspconfig.tsserver.setup {
+  capabilities = ddc_capabilities,
   cmd = { "pnpm", "exec", "typescript-language-server", "--stdio" }
+}
+-- Vim
+lspconfig.vimls.setup {
+  capabilities = ddc_capabilities,
 }
 -- C#
 -- Need to setup .omnisharp.json https://github.com/Hoffs/omnisharp-extended-lsp.nvim#omnisharp-settings
 lspconfig.omnisharp.setup {
+  capabilities = ddc_capabilities,
   cmd = { "dotnet", "/home/code/.omnisharp/bin/OmniSharp.dll", '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+  --cmd = { "dotnet", "/home/code/.omnisharp/bin/OmniSharp.dll" },
   handlers = {
     ["textDocument/definition"] = require('omnisharp_extended').handler,
   },

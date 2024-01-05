@@ -9,6 +9,20 @@ import { Denops, fn } from "https://deno.land/x/dpp_vim@v0.0.7/deps.ts";
 import { expandGlob } from "https://deno.land/std@0.206.0/fs/mod.ts";
 import { DelimiterStream } from "https://deno.land/std@0.184.0/streams/delimiter_stream.ts";
 
+// 1行目が `# disabled` となっている toml ファイルを読み込まない
+async function isDisabledToml(filePath: string): Promise<boolean> {
+  const file = await Deno.open(filePath);
+  const reader = file
+    .readable
+    .pipeThrough(new DelimiterStream(new TextEncoder().encode("\n")))
+    .pipeThrough(new TextDecoderStream())
+    .getReader();
+  const { value } = await reader.read();
+  file.close();
+
+  return value != undefined && value.startsWith("#") && value.includes("disabled");
+}
+
 // 1行目が `# nolazy` となっている toml ファイル以外を lazy とみなす
 async function isLazyToml(filePath: string): Promise<boolean> {
   const file = await Deno.open(filePath);
@@ -53,6 +67,8 @@ export class Config extends BaseConfig {
     }/github.com/supermomonga/dot-nvimrc/**/*.toml`;
     const tomls: Toml[] = [];
     for await (const entry of expandGlob(tomlPathPattern)) {
+      const isDisabled = await isDisabledToml(entry.path);
+      if(isDisabled) { continue }
       const isLazy = await isLazyToml(entry.path);
       console.log(`Load: ${entry.path} (${isLazy ? "Lazy" : "Immediate"})`);
       const toml = await args.dpp.extAction(
