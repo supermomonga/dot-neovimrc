@@ -37,12 +37,6 @@ repo = 'osyo-manga/vim-over'
 repo = 'thinca/vim-quickrun'
 
 [[plugins]]
-repo = 'osyo-manga/vim-automatic'
-hook_add = '''
-let g:automatic_config = []
-'''
-
-[[plugins]]
 repo = 'lambdalisue/kensaku.vim'
 depends = 'denops.vim'
 

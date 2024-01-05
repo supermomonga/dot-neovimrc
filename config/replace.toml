@@ -1,0 +1,4 @@
+
+[[plugins]]
+repo = 'lambdalisue/reword.vim'
+on_event = 'VimEnter'

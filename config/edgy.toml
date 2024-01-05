@@ -125,6 +125,6 @@ vim.api.nvim_create_user_command(
 hook_add = '''
 nnoremap <Space>s :ToggleSidebar<CR>
 nnoremap <Space>r :ToggleSecondarySidebar<CR>
-nnoremap <Space>b :ToggleBottomPane<CR>
+nnoremap <Space>t :ToggleBottomPane<CR>
 nnoremap <Space>m :GoToEditorPane<CR>
 '''

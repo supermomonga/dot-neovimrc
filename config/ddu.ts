@@ -291,6 +291,19 @@ export class Config extends BaseConfig {
       },
     })
 
+    // buffers
+    args.contextBuilder.patchLocal('buffers', {
+      sources: [ { name: 'buffer', }, ],
+      sync: true,
+      uiParams: {
+        ...uiParams,
+        ff: {
+          ...uiParams.ff,
+          floatingTitle: 'Buffers',
+        }
+      }
+    })
+
     // grep
     args.contextBuilder.patchLocal('grep', {
       sources: [
@@ -313,7 +326,6 @@ export class Config extends BaseConfig {
         ff: {
           ...uiParams.ff,
           ignoreEmpty: false,
-          autoResize: false,
           floatingTitle: 'Grep',
         }
       }

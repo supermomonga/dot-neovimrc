@@ -1,0 +1,4 @@
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_cmd = 'Qfreplace'

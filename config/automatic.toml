@@ -1,0 +1,12 @@
+
+[[plugins]]
+repo = 'osyo-manga/vim-automatic'
+on_event = 'VimEnter'
+lua_add = '''
+vim.g.automatic_config = {
+  {
+    match = { filetype = 'help', buftype = 'help' },
+    set = { height = '50%', move = 'bottom' }
+  },
+}
+'''

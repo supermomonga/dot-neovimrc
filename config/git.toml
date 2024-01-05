@@ -1,0 +1,18 @@
+
+[[plugins]]
+repo = 'lambdalisue/gin.vim'
+on_cmd = [
+  'Gin',
+  'GinBuffer',
+  'GinBranch',
+  'GinBrowse',
+  'GinCd',
+  'GinLcd',
+  'GinTcd',
+  'GinChaperon',
+  'GinDiff',
+  'GinEdit',
+  'GinLog',
+  'GinPatch',
+  'GinStatus'
+]
