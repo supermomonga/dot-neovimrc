@@ -8,5 +8,13 @@ vim.g.automatic_config = {
     match = { filetype = 'help', buftype = 'help' },
     set = { height = '50%', move = 'bottom' }
   },
+  {
+    match = { filetype = 'qf' },
+    set = { height = '50%', move = 'bottom' }
+  },
+  {
+    match = { filetype = 'qfreplace' },
+    set = { height = '50%', move = 'bottom' }
+  },
 }
 '''

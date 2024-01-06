@@ -5,9 +5,33 @@ nnoremap <Space>g <Cmd>Ddu -name=grep<CR>
 nnoremap <Space>h <Cmd>Ddu help<CR>
 nnoremap <Space>l <Cmd>Ddu line<CR>
 nnoremap <Space>b <Cmd>Ddu buffer<CR>
+nnoremap <Space><Space> <Cmd>DduContextAwareCommandPalette<CR>
 
 " hook_source {{{
 call ddu#custom#load_config(expand('$VIMDIR/config/ddu.ts'))
+
+let g:command_palette_common_commands = {
+      \ 'LSP: Start': 'LspStart',
+      \ 'LSP: Stop': 'LspStop',
+      \ 'LSP: Restart': 'LspRestart',
+      \ 'LSP: Info': 'LspInfo',
+      \ 'Git: Log': 'GinLog',
+      \ 'Git: Status': 'GinStatus',
+      \ 'Git: Browse': 'GinBrowse',
+      \ }
+let g:command_palette_common_commands_keys = map(keys(g:command_palette_common_commands), { idx, v -> v })
+let g:command_palette_callback_id = denops#callback#register(
+      \ { name -> execute(g:command_palette_common_commands[name]) },
+      \ #{ once: v:false })
+function! DduContextAwareCommandPalette() abort
+  call ddu#start(#{ sources: [
+        \   #{
+        \     name: 'custom-list',
+        \     params: #{ texts: g:command_palette_common_commands_keys, callbackId: g:command_palette_callback_id }
+        \   }
+        \ ]})
+endfunction
+command! DduContextAwareCommandPalette call DduContextAwareCommandPalette()
 " }}}
 
 " ddu-ff {{{

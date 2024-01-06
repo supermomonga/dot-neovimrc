@@ -9,22 +9,27 @@ call ddc#custom#load_config(expand('$VIMDIR/config/ddc.ts'))
 " カーソル位置が行頭でなく、カーソル手前が文字（.含む）であれば補完を発動
 inoremap <expr> <TAB>
       \ pum#visible() ?
-      \   '<Cmd>call pum#map#select_relative(+1)<CR>' :
+      \   '<Cmd>call pum#map#confirm_word()<CR>' :
       \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
       \   '<TAB>' : ddc#map#manual_complete()
 
 " pum 表示中なら確定
-inoremap <expr> <CR> pum#visible()
-      \ ? pum#map#confirm_word()
-      \ : '<CR>'
+" inoremap <expr> <CR> pum#visible()
+"       \ ? pum#map#confirm_word()
+"       \ : '<CR>'
 
 " ddc 表示中なら ddc キャンセル
-inoremap <expr> <ESC> ddc#visible()
-      \ ? '<Cmd>call ddc#hide()<CR>'
+" inoremap <expr> <ESC> ddc#visible()
+"       \ ? '<Cmd>call ddc#hide()<CR>'
+"       \ : '<ESC>'
+inoremap <expr> <ESC> pum#visible()
+      \ ? '<Cmd>call pum#close()<CR>'
       \ : '<ESC>'
 
 inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
 inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+inoremap <C-j>   <Cmd>call pum#map#select_relative(+1)<CR>
+inoremap <C-k>   <Cmd>call pum#map#select_relative(-1)<CR>
 
 " コマンドラインモードの設定
 cnoremap <expr> <Tab>

@@ -3,7 +3,7 @@ augroup vimrc
   autocmd!
 augroup END
 
-set cmdheight=0
+set cmdheight=1
 set expandtab
 set tabstop=2
 set shiftwidth=2

@@ -94,6 +94,7 @@ export class Config extends BaseConfig {
       help: { defaultAction: "open" },
       lsp: { defaultAction: "open" },
       lsp_codeAction: { defaultAction: "apply" },
+      'custom-list': { defaultAction: 'callback' },
     };
 
     // UI

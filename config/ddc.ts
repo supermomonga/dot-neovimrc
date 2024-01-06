@@ -1,5 +1,6 @@
 import { BaseConfig } from "https://deno.land/x/ddc_vim@v4.0.5/types.ts";
 import { ConfigArguments } from "https://deno.land/x/ddc_vim@v4.0.5/base/config.ts";
+import { common } from "https://deno.land/std@0.192.0/path/common.ts";
 
 export class Config extends BaseConfig {
   override async config(args: ConfigArguments): Promise<void> {
@@ -11,6 +12,7 @@ export class Config extends BaseConfig {
 
     args.contextBuilder.patchGlobal({
       ui: "pum",
+      backspaceCompletion: true,
       autoCompleteEvents: [
         "InsertEnter",
         "TextChangedI",
@@ -21,9 +23,9 @@ export class Config extends BaseConfig {
       ],
       sources: commonSources,
       cmdlineSources: {
-        ":": ["cmdline", "cmdline-history", "around"],
-        "@": ["input", "cmdline-history", "file", "around"],
-        ">": ["input", "cmdline-history", "file", "around"],
+        ":": ["cmdline", "around"],
+        "@": ["input", "file", "around"],
+        ">": ["input", "file", "around"],
         "/": ["around", "line"],
         "?": ["around", "line"],
         "-": ["around", "line"],
