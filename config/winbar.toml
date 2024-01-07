@@ -1,0 +1,8 @@
+
+[[plugins]]
+repo = 'utilyre/barbecue.nvim'
+depends = [ 'nvim-navic', 'nvim-web-devicons' ]
+on_source = 'nvim-navic'
+lua_source = '''
+require("barbecue").setup()
+'''
