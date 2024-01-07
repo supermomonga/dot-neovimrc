@@ -11,6 +11,8 @@ nnoremap <Space><Space> <Cmd>DduContextAwareCommandPalette<CR>
 call ddu#custom#load_config(expand('$VIMDIR/config/ddu.ts'))
 
 let g:command_palette_common_commands = {
+      \ 'Run Test for Line (debug)': 'TestWithDebugCurrentLine',
+      \ 'Run Test for File (debug)': 'TestWithDebugCurrentFile',
       \ 'LSP: Start': 'LspStart',
       \ 'LSP: Stop': 'LspStop',
       \ 'LSP: Restart': 'LspRestart',

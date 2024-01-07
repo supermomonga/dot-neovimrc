@@ -10,7 +10,7 @@ on_cmd = [
   'LspRestart'
 ]
 on_event = 'VimEnter'
-depends = ['ddc-source-lsp', 'ddc-source-lsp-setup', 'omnisharp-extended-lsp.nvim']
+depends = ['ddc-source-lsp', 'ddc-source-lsp-setup', 'omnisharp-extended-lsp.nvim', 'nvim-navic']
 lua_add = '''
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -43,6 +43,10 @@ on_attach(function(client, buffer)
   vim.keymap.set('n', '<C-.>', '<Cmd>Lspsaga code_action<CR>', { silent = true, buffer = buffer })
   vim.keymap.set('n', '<Space>.', '<Cmd>Lspsaga code_action<CR>', { silent = true, buffer = buffer })
   vim.call('signature_help#enable')
+  if client.server_capabilities.documentSymbolProvider then
+    local navic = require('nvim-navic')
+    navic.attach(client, buffer)
+  end
 end)
 
 
@@ -161,6 +165,9 @@ lspconfig.omnisharp.setup {
 
 [[plugins]]
 repo = 'Hoffs/omnisharp-extended-lsp.nvim'
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'

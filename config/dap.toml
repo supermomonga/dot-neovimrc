@@ -1,5 +1,83 @@
 [[plugins]]
 repo = 'mfussenegger/nvim-dap'
+on_event = 'VimEnter'
+lua_source = '''
+vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>DapContinue<CR>', { silent = true })
+
+local dap = require('dap')
+dap.adapters.ruby = function(callback, config)
+  callback({
+    type = 'server',
+    host = '127.0.0.1',
+    port = '${port}',
+    executable = {
+      command = 'bundle',
+      args = {
+        'exec', 'rdbg', '-n', '--open', '--port', '${port}', '-c', '--',
+        'bundle', 'exec', config.command, config.script,
+      },
+    },
+  })
+end
+dap.configurations.ruby = {
+  {
+    type = 'ruby',
+    name = 'run current spec file',
+    request = 'attach',
+    localfs = true,
+    command = 'rspec',
+    script = '${file}',
+    waiting = 10000,
+  },
+  {
+    type = 'ruby',
+    name = 'run current spec line',
+    request = 'attach',
+    localfs = true,
+    command = 'rspec',
+    script = function()
+      local linenum = vim.api.nvim_win_get_cursor(0)[1]
+      return vim.fn.expand "%:p" .. ":" .. linenum
+    end,
+    waiting = 10000,
+  },
+}
+'''
 
 [[plugins]]
 repo = 'rcarriga/nvim-dap-ui'
+on_cmd = [
+  'DapOpenUi',
+  'DapCloseUi',
+  'DapToggleUi',
+]
+depends = 'nvim-dap'
+on_source = 'nvim-dap'
+lua_source = '''
+require('dapui').setup()
+'''
+lua_add = '''
+vim.api.nvim_create_user_command(
+  'DapOpenUi',
+  function(opts) require('dapui').open() end,
+  {}
+)
+vim.api.nvim_create_user_command(
+  'DapCloseUi',
+  function(opts) require('dapui').close() end,
+  {}
+)
+vim.api.nvim_create_user_command(
+  'DapToggleUi',
+  function(opts) require('dapui').toggle() end,
+  {}
+)
+'''
+
+[[plugins]]
+repo = 'rcarriga/nvim-dap-virtual-text'
+depends = 'nvim-dap'
+on_source = 'nvim-dap'
+lua_source = '''
+require('nvim-dap-virtual-text').setup()
+'''
