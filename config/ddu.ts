@@ -348,6 +348,16 @@ export class Config extends BaseConfig {
       }
     })
 
+    // edgy:buffers
+    args.contextBuilder.patchLocal('edgy:buffers', {
+      sources: [ { name: 'buffer', }, ],
+      sync: true,
+      ui: 'filer',
+      uiParams: {
+        ...uiParams,
+      }
+    })
+
     return Promise.resolve();
   }
 }

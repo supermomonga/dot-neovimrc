@@ -16,3 +16,10 @@ on_cmd = [
   'GinPatch',
   'GinStatus'
 ]
+
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+on_event = 'VimEnter'
+lua_source = '''
+require('gitsigns').setup()
+'''

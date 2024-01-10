@@ -36,31 +36,51 @@ local left = {
 --    pinned = true,
 --  },
   {
-    ft = 'fern',
-    size = { height = 0.4 },
     title = 'Files',
+    ft = 'fern',
+    size = { height = 0.5 },
     open = 'Fern . -drawer -keep -reveal=%',
     pinned = true,
   },
---  {
---    ft = 'ddu-ff',
---    size = { height = 0.6 },
---    title = 'Symbols',
---    open = 'Ddu -name=edgy:lsp:documentSymbol',
---    filter = function(buf)
---      return vim.b[buf].ddu_ui_name == 'edgy:lsp:documentSymbol'
---    end,
---    pinned = true,
---  },
+  {
+    title = 'Buffers',
+    ft = 'neo-tree',
+    size = { height = 0.2 },
+    open = 'Neotree position=top buffers',
+    filter = function(buf)
+      return vim.b[buf].neo_tree_source == 'buffers'
+    end,
+    pinned = true,
+  },
+  {
+    title = 'Git status',
+    ft = 'neo-tree',
+    size = { height = 0.2 },
+    open = 'Neotree position=left git_status git_base=main',
+    filter = function(buf)
+      return vim.b[buf].neo_tree_source == 'git_status'
+    end,
+    pinned = true,
+  },
 }
 local right = {
   {
+    title = 'Symbols LSP',
     ft = 'ddu-ff',
     size = { height = 0.5 },
-    title = 'Symbols',
     open = 'Ddu -name=edgy:lsp:documentSymbol',
     filter = function(buf)
       return vim.b[buf].ddu_ui_name == 'edgy:lsp:documentSymbol'
+    end,
+    pinned = true,
+  },
+  {
+    title = 'Symbols',
+    ft = 'neo-tree',
+    size = { height = 0.5 },
+    open = 'Neotree position=bottom document_symbols',
+    filter = function(buf)
+      return vim.b[buf].neo_tree_source == 'document_symbols'
     end,
     pinned = true,
   },
@@ -82,8 +102,25 @@ require('edgy').setup({
   close_when_all_hidden = false,
   animate = {
     enabled = false,
+    spinner = {
+      frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+      interval = 80,
+    },
   },
 })
+
+
+-- TODO: spinner が更新されない
+local timer_id = nil
+local function update_state()
+  if timer_id then
+    vim.fn.timer_stop(timer_id)
+  end
+  require('edgy.state').update()
+  timer_id = vim.fn.timer_start(100, update_state)
+end
+-- update_state()
+
 '''
 lua_add = '''
 -- views can only be fully collapsed with the global statusline

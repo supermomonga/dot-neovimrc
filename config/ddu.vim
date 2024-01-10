@@ -75,3 +75,7 @@ inoremap <buffer> <C-j>
 inoremap <buffer> <C-k>
       \ <Cmd>call ddu#ui#do_action('cursorPrevious')<CR>
 " }}}
+
+" ddu-filer {{{
+autocmd TabEnter,WinEnter,CursorHold,FocusGained * call ddu#ui#do_action('checkItems')
+" }}}

@@ -1,4 +1,3 @@
-# disabled
 
 [[plugins]]
 repo = 'akinsho/bufferline.nvim'
@@ -29,5 +28,5 @@ vim.api.nvim_create_user_command(
   {}
 )
 -- vim.keymap.set('n', '<C-x><C-c>', '<Cmd>BufferLineCloseCurrent<CR>')
-vim.keymap.set('n', '<Space>q', '<Cmd>BufferLineCloseCurrent<CR>')
+--vim.keymap.set('n', '<Space>q', '<Cmd>BufferLineCloseCurrent<CR>')
 '''

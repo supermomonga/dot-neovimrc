@@ -1,0 +1,27 @@
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'nvim-neo-tree/neo-tree.nvim'
+on_cmd = 'Neotree'
+depends = [
+  'plenary.nvim',
+  'nvim-web-devicons',
+  'nui.nvim',
+]
+lua_source = '''
+require('neo-tree').setup({
+  open_files_do_not_replace_types = {
+    'terminal',
+    'qf',
+    'fern'
+  },
+  sources = {
+    'filesystem',
+    'buffers',
+    'git_status',
+    'document_symbols',
+  },
+})
+'''
